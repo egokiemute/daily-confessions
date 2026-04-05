@@ -18,7 +18,7 @@
 
 .topbarCluster {
   display: flex;
-  gap: 1rem;
+  gap: 0.4rem;
   color: var(--muted);
 }
 
@@ -118,7 +118,12 @@
   border-radius: 1.75rem;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 22%),
-    linear-gradient(160deg, color-mix(in srgb, var(--card) 84%, #ffffff 16%) 0%, var(--card) 54%, color-mix(in srgb, var(--card) 72%, #a32219 28%) 100%);
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--card) 84%, #ffffff 16%) 0%,
+      var(--card) 54%,
+      color-mix(in srgb, var(--card) 72%, #a32219 28%) 100%
+    );
   box-shadow:
     0 28px 65px rgba(145, 43, 22, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.24);
@@ -131,7 +136,11 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 32%),
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.14),
+      transparent 32%
+    ),
     linear-gradient(180deg, transparent, rgba(87, 11, 11, 0.16));
   pointer-events: none;
 }
@@ -362,7 +371,7 @@
   .card {
     width: 100%;
     min-height: 73vh;
-    transform: rotate(-0.75deg);
+    transform: rotate(-0.45deg);
     border-radius: 0;
   }
 

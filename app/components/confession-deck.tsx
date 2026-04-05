@@ -1,10 +1,18 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { startTransition, useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from "react";
+import {
+  startTransition,
+  useEffect,
+  useEffectEvent,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import gsap from "gsap";
 import type { ConfessionEntry } from "@/app/confessions";
 import styles from "@/app/page.module.css";
+import Link from "next/link";
 
 type ConfessionDeckProps = {
   entries: ConfessionEntry[];
@@ -165,8 +173,12 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
         </div>
         <div className={styles.brand}>BCM Daily Confessions</div>
         <div className={styles.topbarCluster}>
-          <span>Blood of Jesus</span>
-          <span>Rev. 12:11</span>
+          <Link href="https://www.morningstarword.org/" target="_blank">
+            About MSCC
+          </Link>
+          <Link href="https://vomg.org/" target="_blank">
+            VOMG
+          </Link>
         </div>
       </header>
 
@@ -175,16 +187,21 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
           <span className={styles.backdropNumber} ref={numberRef}>
             {entry.number}
           </span>
-          <div className={styles.glow} style={{ "--glow": entry.palette.glow } as CSSProperties} />
+          <div
+            className={styles.glow}
+            style={{ "--glow": entry.palette.glow } as CSSProperties}
+          />
         </div>
 
         <aside className={styles.summaryPanel}>
           <p className={styles.summaryLabel}>Theme</p>
-          <h1 className={styles.summaryTitle}>Daily Confessions About the Blood of Jesus</h1>
+          <h1 className={styles.summaryTitle}>
+            Daily Confessions About the Blood of Jesus
+          </h1>
           <p className={styles.summaryText}>
-            One confession per page, shaped after the editorial system in your PDF reference.
-            Use the arrows, the buttons below, or press <span>←</span>, <span>→</span>, and{" "}
-            <span>S</span>.
+            One confession per page, shaped after the editorial system in your
+            PDF reference. Use the arrows, the buttons below, or press{" "}
+            <span>←</span>, <span>→</span>, and <span>S</span>.
           </p>
         </aside>
 
@@ -211,7 +228,9 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
 
             <div className={styles.cardBody}>
               <p className={styles.kicker} data-animate="">
-                {entry.category === "Power Declaration" ? "Power Declaration" : "Revelation 12:11"}
+                {entry.category === "Power Declaration"
+                  ? "Power Declaration"
+                  : "Revelation 12:11"}
               </p>
               <h2 className={styles.cardTitle} data-animate="">
                 {entry.title}
@@ -222,7 +241,11 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
 
               <div className={styles.confessionBlock}>
                 {entry.confession.map((line) => (
-                  <p key={line} className={styles.confessionLine} data-animate="">
+                  <p
+                    key={line}
+                    className={styles.confessionLine}
+                    data-animate=""
+                  >
                     {line}
                   </p>
                 ))}
@@ -234,7 +257,11 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
                 <span>BCM Daily</span>
                 <span>Blood of Jesus</span>
               </div>
-              <button className={styles.shareButton} type="button" onClick={shuffle}>
+              <button
+                className={styles.shareButton}
+                type="button"
+                onClick={shuffle}
+              >
                 Shuffle Page
               </button>
             </footer>
@@ -243,21 +270,36 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
       </div>
 
       <footer className={styles.controls}>
-        <button className={styles.controlButton} type="button" onClick={showPrevious}>
+        <button
+          className={styles.controlButton}
+          type="button"
+          onClick={showPrevious}
+        >
           &larr; Prev
         </button>
         <div className={styles.progressCluster}>
           <span>{entry.number}</span>
           <div className={styles.progressTrack} aria-hidden="true">
-            <span className={styles.progressFill} style={{ width: `${progress}%` }} />
+            <span
+              className={styles.progressFill}
+              style={{ width: `${progress}%` }}
+            />
           </div>
           <span>{entries[entries.length - 1].number}</span>
         </div>
-        <button className={styles.controlButton} type="button" onClick={showNext}>
+        <button
+          className={styles.controlButton}
+          type="button"
+          onClick={showNext}
+        >
           Next &rarr;
         </button>
         <span className={styles.controlDivider} aria-hidden="true" />
-        <button className={styles.controlButton} type="button" onClick={shuffle}>
+        <button
+          className={styles.controlButton}
+          type="button"
+          onClick={shuffle}
+        >
           Shuffle
         </button>
       </footer>
