@@ -10,6 +10,7 @@ type FormState = {
   session: string;
   testimony: string;
   consentToShare: boolean;
+  anonymousMode: boolean;
 };
 
 const initialState: FormState = {
@@ -19,6 +20,7 @@ const initialState: FormState = {
   session: "",
   testimony: "",
   consentToShare: true,
+  anonymousMode: false,
 };
 
 export function TestimonyForm() {
@@ -77,6 +79,20 @@ export function TestimonyForm() {
           are shown publicly on the testimony wall.
         </p>
       </div>
+
+      <label className={styles.toggleCard}>
+        <input
+          type="checkbox"
+          checked={form.anonymousMode}
+          onChange={(event) => updateField("anonymousMode", event.target.checked)}
+        />
+        <div>
+          <strong>Anonymous mode</strong>
+          <span>
+            Turn this on if you want your public testimony card to hide your name and location.
+          </span>
+        </div>
+      </label>
 
       <div className={styles.fieldGrid}>
         <label className={styles.field}>

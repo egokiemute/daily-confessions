@@ -6,6 +6,7 @@ export type TestimonyRecord = {
   session: string | null;
   testimony: string;
   consentToShare: boolean;
+  anonymousMode: boolean;
   createdAt: string;
 };
 
@@ -16,4 +17,5 @@ export type NewTestimonyInput = {
   session?: string;
   testimony: string;
   consentToShare: boolean;
+  anonymousMode: boolean;
 };

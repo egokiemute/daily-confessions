@@ -27,8 +27,9 @@ export default async function BCM26TestimoniesPage() {
             <p className={styles.sectionEyebrow}>Public Testimony Wall</p>
             <h1>BCM 2026 testimonies worth sharing.</h1>
             <p className={styles.heroText}>
-              Every testimony here was submitted from camp meeting and marked safe for public
-              sharing. Download each one as a BCM-branded social card.
+              Every testimony here was submitted from camp meeting and marked
+              safe for public sharing. Download each one as a BCM-branded social
+              card.
             </p>
           </div>
 
@@ -51,13 +52,13 @@ export default async function BCM26TestimoniesPage() {
             <p className={styles.sectionEyebrow}>Live Count</p>
             <h2>{testimonies.length} public testimonies</h2>
           </div>
-          <Image
+          {/* <Image
             src="/bcm/lowerthird.png"
             alt="BCM lower third"
             width={4800}
             height={826}
             className={styles.wallRibbon}
-          />
+          /> */}
         </div>
 
         <TestimoniesGallery testimonies={testimonies} />

@@ -10,6 +10,7 @@ type TestimonyDocument = {
   session: string | null;
   testimony: string;
   consentToShare: boolean;
+  anonymousMode: boolean;
   createdAt: Date;
 };
 
@@ -37,6 +38,8 @@ function normalizeRequiredString(value: unknown, fieldName: string) {
 }
 
 function serializeTestimony(testimony: TestimonyDocument & { _id: ObjectId }): TestimonyRecord {
+  const anonymousMode = testimony.anonymousMode === true;
+
   return {
     id: testimony._id.toHexString(),
     fullName: testimony.fullName,
@@ -45,13 +48,25 @@ function serializeTestimony(testimony: TestimonyDocument & { _id: ObjectId }): T
     session: testimony.session,
     testimony: testimony.testimony,
     consentToShare: testimony.consentToShare,
+    anonymousMode,
     createdAt: testimony.createdAt.toISOString(),
   };
 }
 
 function serializePublicTestimony(testimony: TestimonyDocument & { _id: ObjectId }): TestimonyRecord {
+  const base = serializeTestimony(testimony);
+
+  if (base.anonymousMode) {
+    return {
+      ...base,
+      fullName: "Anonymous",
+      phone: null,
+      location: null,
+    };
+  }
+
   return {
-    ...serializeTestimony(testimony),
+    ...base,
     phone: null,
   };
 }
@@ -72,6 +87,7 @@ export function parseTestimonyInput(input: unknown): NewTestimonyInput {
     session: normalizeOptionalString(payload.session) ?? undefined,
     testimony,
     consentToShare: payload.consentToShare === true,
+    anonymousMode: payload.anonymousMode === true,
   };
 }
 
@@ -89,6 +105,7 @@ export async function createTestimony(input: NewTestimonyInput) {
     session: input.session?.trim() || null,
     testimony: input.testimony.trim(),
     consentToShare: input.consentToShare,
+    anonymousMode: input.anonymousMode,
     createdAt: new Date(),
   };
 

@@ -25,10 +25,9 @@ export function TestimoniesGallery({ testimonies }: TestimoniesGalleryProps) {
   const createFile = async (testimony: TestimonyRecord) => {
     const fontFamily = getComputedStyle(document.body).fontFamily;
     const blob = await generateTestimonyCard(testimony, fontFamily);
+    const safeName = testimony.fullName.replace(/\s+/g, "-").toLowerCase() || "anonymous";
 
-    return new File([blob], `bcm-testimony-${testimony.fullName.replace(/\s+/g, "-").toLowerCase()}.png`, {
-      type: "image/png",
-    });
+    return new File([blob], `bcm-testimony-${safeName}.png`, { type: "image/png" });
   };
 
   const downloadTestimony = async (testimony: TestimonyRecord) => {
@@ -107,7 +106,7 @@ export function TestimoniesGallery({ testimonies }: TestimoniesGalleryProps) {
 
             <p className={styles.testimonyLocation}>
               {[testimony.location, testimony.phone].filter(Boolean).join(" // ") ||
-                "Believers' Camp Meeting"}
+                (testimony.anonymousMode ? "Shared anonymously at Believers' Camp Meeting" : "Believers' Camp Meeting")}
             </p>
 
             <p className={styles.testimonyText}>{testimony.testimony}</p>
