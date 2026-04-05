@@ -249,9 +249,30 @@
   font: inherit;
 }
 
+.shareButton:disabled {
+  cursor: progress;
+  opacity: 0.72;
+}
+
 .shareButton:hover,
 .controlButton:hover {
   transform: translateY(-1px);
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.actionMessage {
+  grid-column: 1 / -1;
+  margin-top: -0.25rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 246, 239, 0.76);
 }
 
 .controls {
@@ -417,6 +438,11 @@
     width: 100%;
     padding-block: 0.95rem;
     border: 1px solid rgba(255, 246, 239, 0.34);
+  }
+
+  .cardActions {
+    width: 100%;
+    justify-content: stretch;
   }
 
   .controls {

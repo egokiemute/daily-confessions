@@ -1,0 +1,222 @@
+.page {
+  min-height: 100vh;
+  color: #fff4e6;
+  background:
+    radial-gradient(circle at top left, rgba(255, 197, 89, 0.16), transparent 24%),
+    radial-gradient(circle at 90% 10%, rgba(255, 102, 35, 0.14), transparent 24%),
+    linear-gradient(180deg, #160503 0%, #351008 45%, #120402 100%);
+}
+
+.hero {
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.heroTopline {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 219, 180, 0.8);
+}
+
+.heroContent {
+  display: grid;
+  grid-template-columns: minmax(0, 32rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 3rem);
+  margin-top: 1.5rem;
+}
+
+.heroCopy h1 {
+  max-width: 10ch;
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+}
+
+.sectionEyebrow {
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 220, 179, 0.8);
+}
+
+.heroText {
+  max-width: 34rem;
+  margin-top: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 226, 197, 0.82);
+}
+
+.heroVisual {
+  display: grid;
+  place-items: center;
+}
+
+.heroLogo {
+  width: min(100%, 48rem);
+  height: auto;
+  filter: drop-shadow(0 24px 38px rgba(0, 0, 0, 0.42));
+}
+
+.wallSection {
+  padding: 0 clamp(1rem, 4vw, 2rem) 2.5rem;
+}
+
+.wallHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.wallHeader h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  letter-spacing: -0.04em;
+}
+
+.wallRibbon {
+  width: min(26rem, 42vw);
+  height: auto;
+  opacity: 0.92;
+}
+
+.galleryShell {
+  display: grid;
+  gap: 1rem;
+}
+
+.galleryMessage {
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 182, 93, 0.22);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 229, 198, 0.9);
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.testimonyCard,
+.emptyState {
+  padding: 1.2rem;
+  border: 1px solid rgba(255, 186, 108, 0.18);
+  border-radius: 1.6rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 25%),
+    rgba(33, 9, 4, 0.76);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+}
+
+.testimonyMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 221, 183, 0.68);
+}
+
+.testimonyCard h2 {
+  margin-top: 0.85rem;
+  font-size: 1.5rem;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+
+.testimonyLocation {
+  margin-top: 0.55rem;
+  color: rgba(255, 214, 168, 0.78);
+}
+
+.testimonyText {
+  margin-top: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 245, 231, 0.9);
+}
+
+.galleryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.galleryButton {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.85rem 1.1rem;
+  background: linear-gradient(135deg, rgba(255, 188, 81, 0.95), rgba(255, 117, 38, 0.95));
+  color: #240b05;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.galleryButton:disabled {
+  opacity: 0.72;
+  cursor: progress;
+}
+
+.emptyState h2 {
+  font-size: 1.8rem;
+}
+
+.emptyState p {
+  margin-top: 0.8rem;
+  color: rgba(255, 218, 177, 0.82);
+}
+
+@media (max-width: 1100px) {
+  .galleryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .heroContent {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy h1 {
+    max-width: 12ch;
+  }
+
+  .wallHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 680px) {
+  .galleryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroTopline {
+    justify-content: flex-start;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(2.4rem, 12vw, 3.7rem);
+  }
+
+  .galleryButton {
+    width: 100%;
+  }
+
+  .wallRibbon {
+    width: min(100%, 24rem);
+  }
+}

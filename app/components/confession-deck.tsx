@@ -11,6 +11,7 @@ import {
 } from "react";
 import gsap from "gsap";
 import type { ConfessionEntry } from "@/app/confessions";
+import { generateShareCard } from "@/app/lib/share-card";
 import styles from "@/app/page.module.css";
 import Link from "next/link";
 
@@ -35,6 +36,10 @@ function getRandomIndex(currentIndex: number, total: number) {
 export function ConfessionDeck({ entries }: ConfessionDeckProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [pendingAction, setPendingAction] = useState<"download" | "share" | null>(
+    null,
+  );
+  const [actionMessage, setActionMessage] = useState<string | null>(null);
   const shellRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLSpanElement>(null);
   const cardRef = useRef<HTMLElement>(null);
@@ -164,6 +169,95 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    if (!actionMessage) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setActionMessage(null);
+    }, 3600);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [actionMessage]);
+
+  const getShareFile = async () => {
+    const fontFamily = getComputedStyle(document.body).fontFamily;
+    const blob = await generateShareCard(entry, fontFamily);
+
+    return new File([blob], `bcm-confession-${entry.number}.png`, {
+      type: "image/png",
+    });
+  };
+
+  const handleDownload = async () => {
+    try {
+      setPendingAction("download");
+      setActionMessage(null);
+
+      const file = await getShareFile();
+      const objectUrl = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = file.name;
+      link.click();
+      URL.revokeObjectURL(objectUrl);
+
+      setActionMessage("Share card downloaded.");
+    } catch {
+      setActionMessage("Couldn't generate the download card right now.");
+    } finally {
+      setPendingAction(null);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      setPendingAction("share");
+      setActionMessage(null);
+
+      const file = await getShareFile();
+      const shareData = {
+        title: `BCM Daily Confession ${entry.number}`,
+        text: `${entry.title} — BCM Daily Confessions`,
+        files: [file],
+      };
+
+      if (navigator.canShare?.(shareData)) {
+        await navigator.share(shareData);
+        setActionMessage("Share sheet opened.");
+        return;
+      }
+
+      if (navigator.share) {
+        await navigator.share({
+          title: `BCM Daily Confession ${entry.number}`,
+          text: `${entry.title} — ${window.location.href}`,
+          url: window.location.href,
+        });
+        setActionMessage("Share sheet opened.");
+        return;
+      }
+
+      const objectUrl = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = file.name;
+      link.click();
+      URL.revokeObjectURL(objectUrl);
+
+      setActionMessage("Sharing isn't supported here, so the card was downloaded instead.");
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        setActionMessage("Share cancelled.");
+      } else {
+        setActionMessage("Couldn't open sharing right now.");
+      }
+    } finally {
+      setPendingAction(null);
+    }
+  };
+
   return (
     <div className={styles.experience} ref={shellRef}>
       <header className={styles.topbar}>
@@ -257,14 +351,30 @@ export function ConfessionDeck({ entries }: ConfessionDeckProps) {
                 <span>BCM Daily</span>
                 <span>Blood of Jesus</span>
               </div>
-              <button
-                className={styles.shareButton}
-                type="button"
-                onClick={shuffle}
-              >
-                Shuffle Page
-              </button>
+              <div className={styles.cardActions}>
+                <button
+                  className={styles.shareButton}
+                  type="button"
+                  onClick={handleDownload}
+                  disabled={pendingAction !== null}
+                >
+                  {pendingAction === "download" ? "Preparing..." : "Download Card"}
+                </button>
+                <button
+                  className={styles.shareButton}
+                  type="button"
+                  onClick={handleShare}
+                  disabled={pendingAction !== null}
+                >
+                  {pendingAction === "share" ? "Preparing..." : "Share Card"}
+                </button>
+              </div>
             </footer>
+            {actionMessage ? (
+              <p className={styles.actionMessage} data-animate="">
+                {actionMessage}
+              </p>
+            ) : null}
           </div>
         </article>
       </div>
